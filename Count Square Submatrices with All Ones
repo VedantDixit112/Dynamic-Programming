@@ -1,0 +1,33 @@
+class Solution {
+    int [][]dp=new int[300][300];
+    public int countSquares(int[][] arr) {
+        int ans=0;
+        for(int i=0;i<dp.length;i++){
+            for(int j=0;j<dp[i].length;j++){
+                dp[i][j]=-1;
+            }
+        }
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j<arr[i].length;j++){
+                if(arr[i][j]==1){
+                    ans+=rec(arr,i,j);
+                }
+            }
+        }
+        return ans;
+    }
+    public int rec(int [][]arr,int i,int j){
+        if(i<0 || j<0 || i>=arr.length || j>=arr[0].length || arr[i][j]==0){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int ans=0;
+        int l=rec(arr,i,j+1);
+        int r=rec(arr,i+1,j);
+        int s=rec(arr,i+1,j+1);
+        ans=1+Math.min(l,Math.min(r,s));
+        return dp[i][j]=ans;
+    }
+}
