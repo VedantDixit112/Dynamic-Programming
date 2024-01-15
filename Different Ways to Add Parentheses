@@ -1,0 +1,30 @@
+class Solution {
+    public List<Integer> diffWaysToCompute(String str) {
+        List<Integer>res=new ArrayList<>();
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)=='+' || str.charAt(i)=='-' || str.charAt(i)=='*'){
+                String a1=str.substring(0,i);
+                String b1=str.substring(i+1);
+                List<Integer>a=diffWaysToCompute(a1);
+                List<Integer>b=diffWaysToCompute(b1);
+                for(int k:a){
+                    for(int l:b){
+                        if(str.charAt(i)=='+'){
+                            res.add(k+l);
+                        }
+                        else if(str.charAt(i)=='-'){
+                            res.add(k-l);
+                        }
+                        else{
+                            res.add(k*l);
+                        }
+                    }
+                }
+            }
+        }
+        if(res.size()==0){
+            res.add(Integer.valueOf(str));
+        }
+        return res;
+    }
+}
