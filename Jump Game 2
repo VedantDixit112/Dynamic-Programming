@@ -1,0 +1,32 @@
+class Solution {
+    int []dp;
+    public int jump(int[] arr) {
+        int count=0;
+        dp=new int[arr.length];
+        Arrays.fill(dp,-1);
+        return jmp(arr,0);
+    }
+    public int jmp(int []arr,int i){
+        if(i>arr.length-1){
+            return 10000000;
+        }
+        if(i==arr.length-1){
+            return 0;
+        }
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+        if(arr[i]==0){
+            return 1000000;
+        }
+        int ways=0;
+        int min=Integer.MAX_VALUE;
+        for(int id=1;id<=arr[i];id++){
+            if(i+id<arr.length){
+                ways=1+jmp(arr,i+id);
+                min=Math.min(min,ways);
+            }
+        }
+        return dp[i]=min;
+    }
+}
