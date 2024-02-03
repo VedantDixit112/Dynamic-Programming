@@ -1,0 +1,30 @@
+class Solution {
+    int []dp;
+    public boolean canJump(int[] arr) {
+        int n=arr.length;
+        dp=new int[n];
+        Arrays.fill(dp,-1);
+        return jump(arr,0,0);
+    }
+    public boolean jump(int []arr,int i,int count){
+        if(count>=arr.length){
+            return false;
+        }
+        if(i>=arr.length-1){
+            return true;
+        }
+        if(dp[i]!=-1){
+            return dp[i]==0?false:true;
+        }
+        boolean ans=false;
+        for(int id=1;id<=arr[i];id++){
+           ans=ans||jump(arr,i+id,count+1);
+           if(ans==true){
+               dp[i]=1;
+               return true;
+           }
+        }
+        dp[i]=0;
+        return ans;
+    }
+}
