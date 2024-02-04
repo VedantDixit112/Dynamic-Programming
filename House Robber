@@ -1,0 +1,22 @@
+class Solution {
+    int []dp=new int[101];
+    public int rob(int[] arr) {
+        Arrays.fill(dp,-1);
+        int val=house(arr,0);
+        int val1=house(arr,1);
+        return val>val1?val:val1;
+    }
+    public int house(int []arr,int id){
+        if(id>=arr.length){
+            return 0;
+        }
+        if(dp[id]!=-1){
+            return dp[id];
+        }
+        int sum=0;
+        int sum1=0;
+        sum=arr[id]+house(arr,id+2);
+        sum1=house(arr,id+1);
+        return dp[id]=Math.max(sum,sum1);
+    }
+}
