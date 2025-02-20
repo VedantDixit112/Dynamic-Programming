@@ -1,0 +1,20 @@
+class Solution {
+    public int maxCoins(int[] arr) {
+        return burstBalloons(arr, 0, arr.length - 1, new Integer[arr.length][arr.length]);
+    }
+    
+    private int burstBalloons(int[] arr, int beg, int end, Integer[][] dp) {
+        if(beg < 0 || end < 0 || beg >= arr.length || end >= arr.length) return 0;
+        
+        if(dp[beg][end] != null) return dp[beg][end];
+        int max = 0;
+        int prev = beg - 1 >= 0 ? arr[beg - 1] : 1;
+        int next = end + 1 < arr.length ? arr[end + 1] : 1;
+        
+        for(int i = beg; i <= end; i++) {
+            max = Math.max(max, burstBalloons(arr, beg, i - 1, dp) + (prev * arr[i] * next) + burstBalloons(arr, i + 1, end, dp));
+        }
+        
+        return dp[beg][end] = max;
+    }
+}
